@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Mahd 🌸</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #0d0020;
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  color: white;
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+canvas#bg {
+  position: fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index: 0;
+  pointer-events: none;
+}
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  gap: 28px;
+  text-align: center;
+}
+.hidden { display: none !important; }
+#screen1 .rose {
+  font-size: 100px;
+  animation: floatRose 2.5s ease-in-out infinite;
+  display: block;
+  filter: drop-shadow(0 0 30px #ff80c0);
+}
+@keyframes floatRose {
+  0%,100%{transform:translateY(0) rotate(-5deg);}
+  50%{transform:translateY(-18px) rotate(5deg);}
+}
+#screen1 .welcome-text {
+  font-size: 15px;
+  letter-spacing: 4px;
+  color: #e0a0ff;
+  text-transform: uppercase;
+  animation: fadeUp 1.2s ease;
+}
+#screen1 .big-name {
+  font-size: 62px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffb3e6, #ffd966, #ffb3e6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeUp 1.5s ease;
+  line-height: 1.1;
+}
+#screen1 .sub {
+  font-size: 18px;
+  color: #d0a0ff;
+  animation: fadeUp 1.8s ease;
+}
+#screen1 .enter-btn {
+  margin-top: 12px;
+  padding: 16px 48px;
+  background: linear-gradient(135deg, #c264e8, #e85d9a);
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  animation: pulseBtn 2s ease-in-out infinite;
+  letter-spacing: 1px;
+}
+@keyframes pulseBtn {
+  0%,100%{transform:scale(1); box-shadow: 0 0 20px #c264e880;}
+  50%{transform:scale(1.05); box-shadow: 0 0 40px #c264e8cc;}
+}
+#screen1 .enter-btn:hover { opacity: 0.9; }
+#screen2 {
+  gap: 20px;
+}
+#screen2 .title2 {
+  font-size: 22px;
+  color: #f0c0ff;
+  letter-spacing: 2px;
+}
+.envelope-wrap {
+  cursor: pointer;
+  position: relative;
+  width: 280px;
+  height: 200px;
+  margin: 10px auto;
+  perspective: 800px;
+}
+.envelope-body {
+  width: 280px;
+  height: 200px;
+  background: linear-gradient(160deg, #4a0070, #7b00b8);
+  border-radius: 8px 8px 16px 16px;
+  border: 2px solid #c080ff;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 0 40px #9000ff60;
+  transition: transform 0.3s;
+}
+.envelope-wrap:hover .envelope-body { transform: scale(1.03); }
+.envelope-flap {
+  width: 0;
+  height: 0;
+  border-left: 140px solid transparent;
+  border-right: 140px solid transparent;
+  border-top: 110px solid #6a00a0;
+  position: absolute;
+  top: 0; left: 0;
+  transform-origin: top center;
+  transition: transform 0.6s ease;
+  z-index: 10;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+.envelope-wrap.opened .envelope-flap {
+  transform: rotateX(180deg);
+}
+.envelope-left {
+  width: 0; height: 0;
+  border-bottom: 100px solid #5a0090;
+  border-right: 140px solid transparent;
+  position: absolute;
+  bottom: 0; left: 0;
+}
+.envelope-right {
+  width: 0; height: 0;
+  border-bottom: 100px solid #5a0090;
+  border-left: 140px solid transparent;
+  position: absolute;
+  bottom: 0; right: 0;
+}
+.envelope-bottom {
+  width: 280px; height: 100px;
+  background: #5a0090;
+  position: absolute;
+  bottom: 0; left: 0;
+  border-radius: 0 0 16px 16px;
+}
+.envelope-heart {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  z-index: 20;
+  animation: heartPulse 1.5s ease-in-out infinite;
+}
+@keyframes heartPulse {
+  0%,100%{transform:translate(-50%,-50%) scale(1);}
+  50%{transform:translate(-50%,-50%) scale(1.2);}
+}
+.tap-hint {
+  font-size: 14px;
+  color: #c080ff;
+  letter-spacing: 2px;
+  animation: blink 1.5s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+#screen3 {
+  justify-content: flex-start;
+  padding-top: 50px;
+  padding-bottom: 60px;
+}
+.letter-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(200,120,255,0.3);
+  border-radius: 24px;
+  padding: 36px 28px;
+  max-width: 760px;
+  width: 100%;
+  text-align: right;
+  direction: rtl;
+  line-height: 2.1;
+  font-size: 16px;
+  color: #f0deff;
+  position: relative;
+  box-shadow: 0 0 60px rgba(180,80,255,0.15);
+  animation: fadeUp 0.8s ease;
+}
+.letter-top {
+  font-size: 26px;
+  font-weight: 700;
+  color: #ffd966;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.letter-card .pink { color: #ff9de2; font-weight: 600; }
+.letter-card .gold { color: #ffd966; font-weight: 700; }
+.letter-card .purple { color: #d0a0ff; }
+.letter-footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: 6px;
+  animation: heartPulse 2s ease-in-out infinite;
+}
+.back-btn {
+  margin-top: 20px;
+  padding: 12px 32px;
+  background: transparent;
+  border: 1px solid #c080ff;
+  border-radius: 50px;
+  color: #d0a0ff;
+  font-size: 15px;
+  cursor: pointer;
+}
+.back-btn:hover { background: rgba(180,80,255,0.15); }
+.confetti-c {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+  border-radius: 2px;
+  animation: cfFall linear forwards;
+}
+@keyframes cfFall {
+  0%{transform:translateY(-10px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(100vh) rotate(720deg);opacity:0;}
+}
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.hearts-row {
+  display:flex; gap:14px; justify-content:center; font-size:26px;
+}
+.hearts-row span { animation: heartPulse 1.5s ease-in-out infinite; }
+.hearts-row span:nth-child(2){animation-delay:.3s;}
+.hearts-row span:nth-child(3){animation-delay:.6s;}
+.hearts-row span:nth-child(4){animation-delay:.9s;}.photo-strip {
+  margin: 22px 0 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+.photo-item {
+  aspect-ratio: 1;
+  border-radius: 16px;
+  border: 2px solid rgba(255,255,255,0.25);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.22);
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(255,180,230,0.35), rgba(255,220,120,0.18));
+  backdrop-filter: blur(6px);
+  transform: rotate(-3deg);
+}
+.photo-item:nth-child(2n){ transform: rotate(3deg); }
+.photo-item:nth-child(3n){ transform: rotate(-2deg); }
+.photo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.photo-item::before { content: none; }
+.photo-title {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #f8d7ff;
+  letter-spacing: 2px;
+}</style>
+</head>
+<body>
+<audio id="audio1" preload="auto" loop>
+  <source src="song1.mp3" type="audio/mpeg">
+</audio>
+<audio id="audio2" preload="auto">
+  <source src="song2.mp3" type="audio/mpeg">
+</audio>
+<canvas id="bg"></canvas>
+
+<!-- SCREEN 1 -->
+<div class="page" id="screen1">
+  <span class="rose">🌹</span>
+  <div class="welcome-text">✨ Happy Birthday ✨</div>
+  <div class="big-name">Mahd 🌸</div>
+  <div class="sub">في يوم زيّك زيّ الورد 💜</div>
+  <div class="hearts-row">
+    <span>💜</span><span>🌸</span><span>💛</span><span>🌸</span>
+  </div>
+  <button class="enter-btn" onclick="goToEnvelope()">افتحي هديتك 🎁</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="page hidden" id="screen2">
+  <div class="title2">✉️ فيه جواب ليكي يا بنوتي</div>
+  <div class="envelope-wrap" id="envWrap" onclick="openEnvelope()">
+    <div class="envelope-body">
+      <div class="envelope-flap" id="flap"></div>
+      <div class="envelope-left"></div>
+      <div class="envelope-right"></div>
+      <div class="envelope-bottom"></div>
+      <div class="envelope-heart">💌</div>
+    </div>
+  </div>
+  <div class="tap-hint" id="tapHint">✨ اضغطي على الظرف ✨</div>
+  <div class="hearts-row" style="margin-top:8px">
+    <span>💜</span><span>🌸</span><span>💛</span>
+  </div>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="page hidden" id="screen3">
+  <div class="letter-card">
+    <div class="letter-top">🌸 يا Mahd 🌸</div>
+    <p>
+      النهارده عيد ميلاد <span class="gold">بنوتيي</span> 💜<br>
+      أول عيد ميلاد ليكي وحنا مع بعض...<br>
+      وهيفضل <span class="pink">لآخر العمر</span> 🌸<br><br>
+      <div class="photo-title">✨ صورك الصغيرة ✨</div>
+      <div class="photo-strip">
+        <div class="photo-item"><img src="photo_1_2026-06-24_20-33-50.jpg" alt="صورة 1"></div>
+        <div class="photo-item"><img src="photo_2_2026-06-24_20-33-50.jpg" alt="صورة 2"></div>
+        <div class="photo-item"><img src="photo_3_2026-06-24_20-33-50.jpg" alt="صورة 3"></div>
+        <div class="photo-item"><img src="photo_4_2026-06-24_20-33-50.jpg" alt="صورة 4"></div>
+        <div class="photo-item"><img src="photo_5_2026-06-24_20-33-50.jpg" alt="صورة 5"></div>
+        <div class="photo-item"><img src="photo_6_2026-06-24_20-33-50.jpg" alt="صورة 6"></div>
+        <div class="photo-item"><img src="photo_7_2026-06-24_20-33-50.jpg" alt="صورة 7"></div>
+        <div class="photo-item"><img src="photo_8_2026-06-24_20-33-50.jpg" alt="صورة 8"></div>
+        <div class="photo-item"><img src="photo_9_2026-06-24_20-33-50.jpg" alt="صورة 9"></div>
+        <div class="photo-item"><img src="photo_10_2026-06-24_20-33-50.jpg" alt="صورة 10"></div>
+        <div class="photo-item"><img src="photo_11_2026-06-24_20-33-50.jpg" alt="صورة 11"></div>
+        <div class="photo-item"><img src="photo_12_2026-06-24_20-33-50.jpg" alt="صورة 12"></div>
+        <div class="photo-item"><img src="photo_13_2026-06-24_20-33-50.jpg" alt="صورة 13"></div>
+        <div class="photo-item"><img src="photo_14_2026-06-24_20-33-50.jpg" alt="صورة 14"></div>
+        <div class="photo-item"><img src="photo_15_2026-06-24_20-33-50.jpg" alt="صورة 15"></div>
+        <div class="photo-item"><img src="photo_16_2026-06-24_20-33-50.jpg" alt="صورة 16"></div>
+        <div class="photo-item"><img src="photo_17_2026-06-24_20-33-50.jpg" alt="صورة 17"></div>
+      </div>
+      عاوز أقولك على كم حاجة...<br>
+      إنتي <span class="gold">أحلى حاجة في حياتي</span><br>
+      بشوفك بنتي وحبيبتي وصحبتي<br>
+      <span class="pink">ومسألة وقت هتبقي مراتي وأم عيالي</span> 💛<br><br>
+      أحلى صدفة قابلتها في حياتي...<br>
+      ودلوقتي بقت <span class="gold">بتقرفني</span> 😂<br>
+      بس مليش غيرك 🫶<br><br>
+      يروحي بجري عليكي أول ما بفرح،<br>
+      وبجري عليكي وقت ما أكون رعلان...<br>
+      <span class="pink">إنتي كل حياتي</span> 🌸<br><br>
+      بشاركك كل تفاصيلي،<br>
+      إنتي سندي وضهري والحنان كله 💜<br><br>
+      لو قعدت العمر كله قدامك<br>
+      من غير ما نتكلم...<br>
+      <span class="gold">عمري مش مهمل</span><br>
+      كفاياا إني باصص في عيونك 😍<br>
+      يا أحلى عيون يننن عيونيي 💛<br><br>
+      <span class="pink">يروح قلبي وعمري الجاي...</span><br>
+      بحبك وهفضل أحبك <span class="gold">لآخر العمر</span> 💜🌸💜
+    </p>
+    <div class="letter-footer">💜 💛 🌸 💛 💜</div>
+  </div>
+  <button class="back-btn" onclick="goBack()">⬅ رجعي</button>
+</div>
+
+<script>
+const song1Url = './_كل_سنة_في_حياتنا_وانتي_صاحبتي_وبنتي_وحبيبتي_⭐️❤️_رامي_صبري_من_ألبوم.mp3';
+const song2Url = './💙(MP3).mp3';
+
+let audioContext = null;
+let audioStarted = false;
+
+function getAudioEl(id) {
+  return document.getElementById(id);
+}
+
+function setExternalAudio(audioEl, src, loop = false) {
+  const sourceEl = audioEl.querySelector('source');
+  if (sourceEl) {
+    sourceEl.src = src;
+    audioEl.load();
+  } else {
+    audioEl.src = src;
+    audioEl.load();
+  }
+  audioEl.loop = loop;
+}
+
+function stopAudioTrack(id) {
+  const audioEl = getAudioEl(id);
+  if (!audioEl) return;
+  audioEl.pause();
+  audioEl.currentTime = 0;
+}
+
+function playSound(kind) {
+  const primaryId = kind === 'open' ? 'audio2' : 'audio1';
+  const secondaryId = kind === 'open' ? 'audio1' : 'audio2';
+  const src = kind === 'open' ? song2Url : song1Url;
+  const loop = kind !== 'open';
+  const fallbackKind = kind === 'enter' ? 'enter' : kind === 'open' ? 'open' : 'back';
+
+  stopAudioTrack(secondaryId);
+
+  const triggerTone = () => {
+    ensureAudioContext().catch(()=>{});
+    playSequence(fallbackKind).catch(()=>{});
+  };
+
+  triggerTone();
+
+  const audioEl = getAudioEl(primaryId);
+  if (!audioEl) return;
+
+  const fallback = () => triggerTone();
+  audioEl.onerror = fallback;
+  setExternalAudio(audioEl, src, loop);
+  audioEl.volume = 1;
+  audioEl.currentTime = 0;
+  audioEl.play().catch(() => {
+    fallback();
+  });
+}
+
+function startAudioOnFirstInteraction() {
+  if (audioStarted) return;
+  audioStarted = true;
+  playSound('enter');
+}
+
+async function ensureAudioContext() {
+  if (!audioContext) {
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    if (!AudioCtx) return null;
+    audioContext = new AudioCtx();
+  }
+  if (audioContext.state === 'suspended') {
+    try {
+      await audioContext.resume();
+    } catch (error) {
+      return null;
+    }
+  }
+  return audioContext;
+}
+
+async function playSequence(kind) {
+  const ctx = await ensureAudioContext();
+  if (!ctx) return;
+
+  const playTone = (freqs, duration = 0.24, volume = 0.08, delay = 0) => {
+    const now = ctx.currentTime + delay;
+    const gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.0001, now);
+    gain.gain.exponentialRampToValueAtTime(volume, now + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+    gain.connect(ctx.destination);
+
+    freqs.forEach((freq, index) => {
+      const osc = ctx.createOscillator();
+      osc.type = index === 0 ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.connect(gain);
+      osc.start(now);
+      osc.stop(now + duration);
+    });
+  };
+
+  if (kind === 'enter') {
+    playTone([440, 660], 0.24, 0.1);
+    setTimeout(() => playTone([523, 784], 0.22, 0.08), 140);
+    setTimeout(() => playTone([659, 988], 0.25, 0.06), 280);
+  } else if (kind === 'open') {
+    playTone([659, 987], 0.28, 0.1);
+    setTimeout(() => playTone([784, 1175], 0.24, 0.08), 140);
+  } else if (kind === 'back') {
+    playTone([392, 587], 0.2, 0.08);
+  }
+}
+
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  stars = Array.from({length:150}, () => ({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*1.5+0.3,
+    a: Math.random(),
+    sp: Math.random()*0.015+0.005
+  }));
+}
+resize();
+window.addEventListener('resize', resize);
+
+function drawBg() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s => {
+    s.a += s.sp;
+    if (s.a>1||s.a<0) s.sp=-s.sp;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,200,255,${Math.abs(s.a)})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawBg);
+}
+drawBg();
+
+function spawnConfetti() {
+  const colors = ['#ff9de2','#ffd966','#d090ff','#fff','#ffb3ff','#ffe066'];
+  for (let i=0;i<8;i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-c';
+    el.style.left = Math.random()*100+'vw';
+    el.style.top = '-10px';
+    el.style.background = colors[Math.floor(Math.random()*colors.length)];
+    el.style.width = (Math.random()*8+5)+'px';
+    el.style.height = (Math.random()*8+5)+'px';
+    el.style.borderRadius = Math.random()>0.5?'50%':'2px';
+    el.style.animationDuration = (Math.random()*3+3)+'s';
+    el.style.animationDelay = Math.random()*1+'s';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 5000);
+  }
+}
+
+setInterval(spawnConfetti, 700);
+spawnConfetti();
+
+function show(id) {
+  ['screen1','screen2','screen3'].forEach(s => {
+    document.getElementById(s).classList.add('hidden');
+  });
+  document.getElementById(id).classList.remove('hidden');
+}
+
+document.addEventListener('pointerdown', startAudioOnFirstInteraction, { once: true });
+document.addEventListener('click', startAudioOnFirstInteraction, { once: true });
+document.addEventListener('keydown', startAudioOnFirstInteraction, { once: true });
+
+function goToEnvelope() {
+  show('screen2');
+  playSound('enter');
+}
+
+let envelopeOpened = false;
+function openEnvelope() {
+  if (envelopeOpened) return;
+  envelopeOpened = true;
+  document.getElementById('envWrap').classList.add('opened');
+  document.getElementById('tapHint').textContent = '💌 جاي الجواب...';
+  setTimeout(() => {
+    show('screen3');
+    playSound('open');
+    spawnConfetti();spawnConfetti();spawnConfetti();
+  }, 900);
+}
+
+function goBack() {
+  envelopeOpened = false;
+  document.getElementById('envWrap').classList.remove('opened');
+  show('screen2');
+  playSound('back');
+}
+</script>
